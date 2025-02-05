@@ -35,7 +35,7 @@ def logout_user(request):
 
 def register_user(request):
     if request.method=="POST":
-        form = SignUpForm(request.POST)
+        form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             #authenticate and login
@@ -60,3 +60,16 @@ def customer_record(request,pk):
     else:
         messages.success(request,"You must be logged in to view the record.")
         return redirect('home')
+    
+def delete_record(request,pk):
+    if request.user.is_authenticated:
+        customer = Record.objects.get(id=pk)
+        customer.delete()
+        messages.success(request,"Record Deleted Successfully")
+        return redirect('home')
+    
+    else:
+        messages.success(request,"You must be logged in to delete the record.")
+        return redirect('home')
+
+

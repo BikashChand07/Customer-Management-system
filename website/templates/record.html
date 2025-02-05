@@ -1,14 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Customer Record:</h1>
-{{ customer_record }} <br>
-{{ customer_record.id }}  <br>          
-{{ customer_record.email }}<br>
-{{ customer_record.phone }}<br>
-{{ customer_record.address }} <br>
-{{ customer_record.city }} <br>
-{{ customer_record.state }} <br>
-{{ customer_record.zipcode }} <br>
-{{ customer_record.created_at }} <br>
+<div class="col-md-6 offset-md-3">
+<div class="card" style="width: 18rem;">
+    <img src="{{ customer_record.image.url }}" class="card-img-top" alt="{{customer_record}}">
+    <div class="card-body">
+      <h5 class="card-title"> {{ customer_record }}</h5>
+      <p class="card-text"> 
+        <strong> Id: </strong>{{ customer_record.id }}  <br>          
+        <strong> Email: </strong>{{ customer_record.email }}<br>
+        <strong> Phone: </strong>{{ customer_record.phone }}<br>
+        <strong> Address: </strong>{{ customer_record.address }} <br>
+        <strong> City: </strong>{{ customer_record.city }} <br>
+        <strong> State: </strong>{{ customer_record.state }} <br>
+        <strong> ZipCode: </strong>{{ customer_record.zipcode }} <br>
+        <strong> Joined_Date: </strong>{{ customer_record.created_at }} <br>
+      </p>
+      <a href="{% url 'home' %}" class="card-link btn btn-secondary" >Go back</a>
+      <a href="{% url 'delete-record' customer_record.id  %}" class="card-link btn btn-danger" >Delete</a>
+    </div>
+  </div>
+</div>
 
 {% endblock content%}
