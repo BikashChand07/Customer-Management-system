@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import Record
+from django.db.models import Q
 
 from .forms import SignUpForm, AddRecordForm
 
@@ -99,3 +100,41 @@ def update_record(request,pk):
         messages.success(request,"You must be logged in.")
         return redirect('home')
 
+def search_record(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        full_name_query = searched  # Full name 
+        name_parts = full_name_query.strip().split()
+
+        if len(name_parts) >= 2:
+            first_name = name_parts[0]           # First word as first name
+            last_name = name_parts[-1]           # Last word as last name
+            searched_record = Record.objects.filter(
+            Q(first_name__iexact=first_name) & Q(last_name__iexact=last_name)
+            )
+
+        elif len(name_parts) == 1:
+            # If only one name is provided, search in both fields
+            name = name_parts[0]
+            searched_record = Record.objects.filter(
+            Q(first_name__iexact=name) | Q(last_name__iexact=name)
+            )
+
+        else:
+            searched_record = Record.objects.none()
+       
+        # If you want to search for names that partially match the input, use icontains.
+        # Record.objects.filter(first_name__icontains=first_name_query, last_name__icontains=last_name_query)
+
+        return render(request,'search_record.html',{'searched_record':searched_record})
+    
+    else:
+        return render(request,'search_record.html',{})
+
+
+
+
+
+
+
+    

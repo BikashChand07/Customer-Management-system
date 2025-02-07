@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+    
+    {% if searched_record %}
+    <h2>search result {{ searched }}</h2>
+    <br>
+    {% for search in searched_record  %}
+    
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title"> {{ search }}</h5>
+              <p class="card-text"> 
+                <strong> Id: </strong>{{ search.id }}  <br>          
+                <strong> Email: </strong>{{ search.email }}<br>
+                <strong> Phone: </strong>{{ search.phone }}<br>
+                <strong> Address: </strong>{{ search.address }} <br>
+                <strong> City: </strong>{{ search.city }} <br>
+                <strong> State: </strong>{{ search.state }} <br>
+                <strong> ZipCode: </strong>{{ search.zipcode }} <br>
+                <strong> Joined_Date: </strong>{{ search.created_at }} <br>
+              </p>
+              <div class="card-body d-flex justify-content-between">
+                <a href="{% url 'home' %}" class="card-link btn btn-secondary" >Go back</a>
+                <a href="{% url 'delete-record' search.id  %}" class="card-link btn btn-danger" >Delete</a>
+                <a href="{% url 'update-record' search.id  %}" class="card-link btn btn-secondary" >Update</a>
+              </div>
+          </div>
+          </div>
+       
+        
+    {% endfor %}
+        
+    {% else %}
+    <h1>you forgot for search</h1>    
+    {% endif %}
+        
+   
+</div>
+
+{% endblock content %}
