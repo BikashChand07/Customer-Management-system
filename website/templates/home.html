@@ -3,6 +3,8 @@
 
   
     {% if user.is_authenticated %}
+    <h1>Employee List</h1>
+    <div class="table-responsive">
     <table class="table table-hover table-bordered">
       <thead class="table-dark">
         <tr>
@@ -13,8 +15,8 @@
           <th scope="col">Address</th>
           <th scope="col">City</th>
           <th scope="col">State</th>
-          <th scope="col">Zipcode</th>
           <th scope="col">Joined Date</th>
+          <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -24,21 +26,39 @@
             <tr>
               <td > {{ record.id }} </td>
               <td>
-                 <a  class="nav-link" href="{% url 'record' record.id %}">{{ record.first_name }} {{ record.last_name }} </a>
+                 <a class="nav-link" style="white-space: nowrap;" href="{% url 'record' record.id %}">{{ record.first_name }} {{ record.last_name }} </a>
                 </td>
-              <td>{{ record.email }}</td>
-              <td>{{ record.phone }}</td>
-              <td>{{ record.address }} </td>
-              <td>{{ record.city }} </td>
-              <td>{{ record.state }} </td>
-              <td>{{ record.zipcode }} </td>
-              <td> {{ record.created_at }} </td>
+              <td style="white-space: nowrap; ">{{ record.email }}</td>
+              <td style="white-space: nowrap;">{{ record.phone }}</td>
+              <td style="white-space: nowrap;">{{ record.address }} </td>
+              <td style="white-space: nowrap;">{{ record.city }} </td>
+              <td style="white-space: nowrap;">{{ record.state }} </td>
+              <td style="white-space: nowrap;"> {{ record.created_at }} </td>
+              <td style="white-space: nowrap;">
+                <div class="d-flex justify-content-between">
+                  <!-- View Icon -->
+                  <a href="{% url 'record' record.id %}" class="btn btn-link p-0 me-3" title="View Record">
+                   <i class="fa fa-eye fa-lg text-info"></i>
+                  </a>
+
+                   <!-- Update Icon -->
+                  <a href="{% url 'update-record' record.id %}" class="btn btn-link p-0 me-3" title="Update Record">
+                    x<i class="fa fa-pen fa-lg text-secondary"></i>
+                  </a>
+
+                  <!-- Delete Icon -->
+                   <a href="{% url 'delete-record' record.id %}" class="btn btn-link p-0" title="Delete Record">
+                     <i class="fa fa-trash fa-lg text-danger"></i>
+                    </a>
+                  </div>
+               </td>
             </tr>
           
           {% endfor %}
       {% endif %}
     </tbody>
   </table>
+</div>
 
     {% else %}
     <div class="col-md-6 offset-md-3">

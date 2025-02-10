@@ -4,15 +4,15 @@
 <div class="col-md-6 offset-md-3">
     
     {% if searched_record %}
-    <h2>search result {{ searched }}</h2>
-    <br>
-    {% for search in searched_record  %}
     
+    
+    {% for search in searched_record  %}
+    <h2>Employee ID: {{search.id}}</h2>
+    <br>
         <div class="card" style="width: 18rem;">
             <div class="card-body">
-              <h5 class="card-title"> {{ search }}</h5>
-              <p class="card-text"> 
-                <strong> Id: </strong>{{ search.id }}  <br>          
+              <h5 class="card-title">{{ search }}</h5>
+              <p class="card-text">          
                 <strong> Email: </strong>{{ search.email }}<br>
                 <strong> Phone: </strong>{{ search.phone }}<br>
                 <strong> Address: </strong>{{ search.address }} <br>

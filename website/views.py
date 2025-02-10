@@ -4,6 +4,7 @@ from django.contrib import messages
 from .models import Record
 from django.db.models import Q
 
+
 from .forms import SignUpForm, AddRecordForm
 
 # Create your views here.
@@ -106,6 +107,11 @@ def search_record(request):
         full_name_query = searched  # Full name 
         name_parts = full_name_query.strip().split()
 
+        #split example:
+        # s = "hello world"
+        #  by default Splits by whitespace
+        # print(s.split())  output = ['hello', 'world']
+
         if len(name_parts) >= 2:
             first_name = name_parts[0]           # First word as first name
             last_name = name_parts[-1]           # Last word as last name
@@ -114,7 +120,7 @@ def search_record(request):
             )
 
         elif len(name_parts) == 1:
-            # If only one name is provided, search in both fields
+            # If only one name either (first_name or last_name) is provided, search in both fields
             name = name_parts[0]
             searched_record = Record.objects.filter(
             Q(first_name__iexact=name) | Q(last_name__iexact=name)
