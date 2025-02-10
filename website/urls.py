@@ -12,5 +12,6 @@ urlpatterns = [
     path('add_record/',views.add_record, name="add-record" ),
     path('update/<int:pk>',views.update_record, name="update-record" ),
     path('search_record',views.search_record, name="search-record" ),
+    path('download-customers/', views.download_customers, name='download-customers'),
 ]
 

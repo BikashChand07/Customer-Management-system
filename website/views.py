@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import Record
 from django.db.models import Q
+import csv
+from django.http import HttpResponse
 
 
 from .forms import SignUpForm, AddRecordForm
@@ -136,6 +138,35 @@ def search_record(request):
     
     else:
         return render(request,'search_record.html',{})
+    
+
+def download_customers(request):
+    # Create the HttpResponse object with CSV headers
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="customer_records.csv"'
+
+    # Create a CSV writer
+    writer = csv.writer(response)
+    
+    # Write the headers
+    writer.writerow(['ID', 'First Name', 'Last Name', 'Email', 'Phone', 'Address', 'City', 'State', 'Joined Date'])
+
+    # Write data rows
+    customers = Record.objects.all()
+    for customer in customers:
+        writer.writerow([
+            customer.id,
+            customer.first_name,
+            customer.last_name,
+            customer.email,
+            customer.phone,
+            customer.address,
+            customer.city,
+            customer.state,
+           customer.created_at.strftime('%Y-%m-%d')
+        ])
+    return response
+
 
 
 
