@@ -148,11 +148,12 @@ def download_customers(request):
     # Create a CSV writer
     writer = csv.writer(response)
     
-    # Write the headers
+     # Designate the model
+    customers = Record.objects.all()
+
+    # Write the column headings to the csv file using list
     writer.writerow(['ID', 'First Name', 'Last Name', 'Email', 'Phone', 'Address', 'City', 'State', 'Joined Date'])
 
-    # Write data rows
-    customers = Record.objects.all()
     for customer in customers:
         writer.writerow([
             customer.id,
@@ -163,7 +164,7 @@ def download_customers(request):
             customer.address,
             customer.city,
             customer.state,
-           customer.created_at.strftime('%Y-%m-%d')
+            customer.created_at.strftime('%Y-%m-%d')
         ])
     return response
 
